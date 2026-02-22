@@ -1,129 +1,144 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Typing effect for Hero Terminal
-    const terminalLines = [
-        "Starting portfolioOS...",
-        "Loading dependencies...",
-        "Resolving modules: Webpack, React, UI/UX",
-        "Compiling assets... Done.",
-        "System Ready.",
-        "> Welcome to my interactive portfolio!"
-    ];
+  // 1. Deprecated Hero Terminal Logic Removed
+  // 2. Intersection Observer for Scroll Animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15 // Trigger when 15% of the element is visible
+  };
 
-    const terminalContainer = document.getElementById('hero-terminal');
-    let lineIndex = 0;
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Find all animated elements within the intersecting section
+        const animatedChildren = entry.target.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
+        animatedChildren.forEach(el => {
+          el.classList.add('is-visible');
+        });
+        // observer.unobserve(entry.target); // Uncomment to animate only once
+      } else {
+        // Remove class if you want them to animate again when scrolling up
+        const animatedChildren = entry.target.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
+        animatedChildren.forEach(el => {
+          el.classList.remove('is-visible');
+        });
+      }
+    });
+  }, observerOptions);
 
-    function typeLine() {
-        if (lineIndex < terminalLines.length) {
-            const p = document.createElement('p');
-            // Style the prompt prefix differently
-            if (terminalLines[lineIndex].startsWith(">")) {
-                p.innerHTML = `<span style="color: var(--accent-green)">></span> ${terminalLines[lineIndex].substring(1)}`;
-            } else {
-                p.innerHTML = `<span style="color: var(--text-muted)">[sys]</span> <span style="color: var(--text-primary)">${terminalLines[lineIndex]}</span>`;
-            }
-            
-            p.style.marginBottom = '0.5rem';
-            terminalContainer.appendChild(p);
+  // Observe all sections
+  document.querySelectorAll('.observe-section').forEach(section => {
+    observer.observe(section);
+  });
 
-            lineIndex++;
-            setTimeout(typeLine, Math.random() * 400 + 200); // Random delay between 200ms and 600ms
-        } else {
-            // Add a blinking cursor at the end
-            const cursor = document.createElement('p');
-            cursor.innerHTML = `<span style="color: var(--accent-green)">guest@dev</span>:~$ <span class="blink">_</span>`;
-            terminalContainer.appendChild(cursor);
-            
-            // Add CSS for blinking cursor dynamically or assume it's in style.css
-            const style = document.createElement('style');
-            style.innerHTML = `
-                .blink {
-                    animation: blink-animation 1s steps(2, start) infinite;
-                }
-                @keyframes blink-animation {
-                    to { visibility: hidden; }
-                }
-            `;
-            document.head.appendChild(style);
+
+  // 3. Side Navigation Active State
+  const navDots = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.section');
+
+  const navObserverOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5 // 50% must be visible
+  };
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        // Remove active class from all
+        navDots.forEach(dot => dot.classList.remove('active'));
+        // Add active class to corresponding dot
+        const activeDot = document.querySelector(`.nav-link[data-target="${id}"]`);
+        if (activeDot) {
+          activeDot.classList.add('active');
         }
-    }
-
-    // Start typing effect slightly after load
-    setTimeout(typeLine, 500);
-
-
-    // 2. Intersection Observer for Scroll Animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 // Trigger when 15% of the element is visible
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Find all animated elements within the intersecting section
-                const animatedChildren = entry.target.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
-                animatedChildren.forEach(el => {
-                    el.classList.add('is-visible');
-                });
-                // observer.unobserve(entry.target); // Uncomment to animate only once
-            } else {
-                 // Remove class if you want them to animate again when scrolling up
-                 const animatedChildren = entry.target.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
-                 animatedChildren.forEach(el => {
-                     el.classList.remove('is-visible');
-                 });
-            }
-        });
-    }, observerOptions);
-
-    // Observe all sections
-    document.querySelectorAll('.observe-section').forEach(section => {
-        observer.observe(section);
+      }
     });
+  }, navObserverOptions);
 
+  sections.forEach(section => {
+    navObserver.observe(section);
+  });
 
-    // 3. Side Navigation Active State
-    const navDots = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
+  // 4. Skills 3D Sphere (TagCloud)
+  const skillContainer = '.skill-sphere';
+  const skillTexts = [
+    '<div class="skill-item"><i class="devicon-html5-plain colored"></i><span>HTML</span></div>',
+    '<div class="skill-item"><i class="devicon-css3-plain colored"></i><span>CSS</span></div>',
+    '<div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>',
+    '<div class="skill-item"><i class="devicon-react-original colored"></i><span>React</span></div>',
+    '<div class="skill-item"><i class="devicon-nextjs-plain"></i><span>Next.js</span></div>',
+    '<div class="skill-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>',
+    '<div class="skill-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>',
+    '<div class="skill-item"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></div>',
+    '<div class="skill-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>',
+    '<div class="skill-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>',
+    '<div class="skill-item"><i class="devicon-amazonwebservices-plain-wordmark colored"></i><span>AWS</span></div>',
+    '<div class="skill-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>',
+    '<div class="skill-item"><i class="devicon-figma-plain colored"></i><span>Figma</span></div>',
+    '<div class="skill-item"><i class="devicon-tailwindcss-plain colored"></i><span>Tailwind</span></div>',
+    '<div class="skill-item"><i class="devicon-bash-plain"></i><span>Bash</span></div>'
+  ];
 
-    const navObserverOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5 // 50% must be visible
-    };
+  const skillOptions = {
+    radius: window.innerWidth < 768 ? 160 : 300,
+    maxSpeed: 'normal',
+    initSpeed: 'normal',
+    direction: 135,
+    keep: true,
+    useHTML: true
+  };
 
-    const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                // Remove active class from all
-                navDots.forEach(dot => dot.classList.remove('active'));
-                // Add active class to corresponding dot
-                const activeDot = document.querySelector(`.nav-link[data-target="${id}"]`);
-                if (activeDot) {
-                    activeDot.classList.add('active');
-                }
-            }
-        });
-    }, navObserverOptions);
+  if (document.querySelector(skillContainer)) {
+    TagCloud(skillContainer, skillTexts, skillOptions);
 
-    sections.forEach(section => {
-        navObserver.observe(section);
-    });
+    // Workaround: TagCloud JS renders string as text, so we map it to innerHTML
+    // Use setTimeout to ensure DOM elements are created before parsing
+    setTimeout(() => {
+      const items = document.querySelectorAll('.tagcloud--item');
+      items.forEach(item => {
+        item.innerHTML = item.innerText;
+      });
 
-    // Handle initialization button click
-    const initBtn = document.getElementById('init-btn');
-    if (initBtn) {
-        initBtn.addEventListener('click', () => {
-             terminalContainer.innerHTML = '';
-             lineIndex = 0;
-             typeLine();
-             // Scroll down to projects after a bit
-             setTimeout(() => {
-                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-             }, 3000);
-        });
+      // Ensure colors apply properly for non-colored icons
+      document.querySelectorAll('.devicon-nextjs-plain, .devicon-bash-plain').forEach(icon => {
+        icon.style.color = '#fff';
+      });
+
+      // Force AWS icon to be pure white using a CSS filter
+      document.querySelectorAll('.devicon-amazonwebservices-plain-wordmark').forEach(icon => {
+        icon.style.filter = 'brightness(0) invert(1)';
+      });
+    }, 100);
+
+    // Drag to rotate logic
+    const dragOverlay = document.querySelector('.skill-drag-overlay');
+    let isDragging = false;
+
+    if (dragOverlay) {
+      dragOverlay.addEventListener('mousedown', () => { isDragging = true; });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      // Touch support for mobile dragging
+      dragOverlay.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+      window.addEventListener('touchend', () => { isDragging = false; });
+
+      // Forward mouse movements to the sphere only when dragging
+      const handleDrag = (clientX, clientY) => {
+        if (isDragging) {
+          const fakeEvent = new MouseEvent('mousemove', {
+            clientX: clientX,
+            clientY: clientY,
+            bubbles: true
+          });
+          document.querySelector(skillContainer).dispatchEvent(fakeEvent);
+        }
+      };
+
+      dragOverlay.addEventListener('mousemove', (e) => handleDrag(e.clientX, e.clientY));
+      dragOverlay.addEventListener('touchmove', (e) => handleDrag(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
     }
+  }
 });
