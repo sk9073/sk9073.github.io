@@ -649,71 +649,275 @@ h6 {
 /* Git Log Experience Section */
 .timeline {
   position: relative;
-  padding-left: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem;
+  padding: 2rem 0;
 }
 
 .timeline::before {
   content: '';
   position: absolute;
-  left: 4px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: var(--border-color);
+  background-color: #555;
+  opacity: 0.7;
 }
 
 .timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
-  padding-left: 2rem;
+  width: 100%;
 }
 
+.timeline-item.left {
+  flex-direction: row;
+}
+
+.timeline-item.right {
+  flex-direction: row-reverse;
+}
+
+.timeline-content {
+  width: 45%;
+  position: relative;
+}
+
+.timeline-date {
+  width: 45%;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item.left .timeline-date {
+  justify-content: flex-start;
+}
+
+.timeline-item.right .timeline-date {
+  justify-content: flex-end;
+}
+
+/* Commit Node (The Dot) */
 .commit-node {
   position: absolute;
-  left: -2rem;
-  top: 0.3rem;
-  width: 10px;
-  height: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background-color: var(--accent-orange);
-  box-shadow: 0 0 10px var(--accent-orange);
+  background-color: var(--bg-color);
+  border: 4px solid var(--accent-orange);
+  box-shadow: 0 0 10px rgba(234, 88, 12, 0.5);
+  z-index: 2;
 }
 
-.commit-hash {
+/* Horizontal Connector Line */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 45%;
+  right: 45%;
+  top: 50%;
+  height: 2px;
+  background-color: #555;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+/* Terminal Card Styling */
+.commit-card {
+  background-color: #1a1a1a;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.commit-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.commit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-color);
   font-family: var(--font-mono);
-  color: var(--accent-blue);
-  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
 }
 
-.commit-content .role {
-  font-size: 1.3rem;
-  margin-bottom: 0.2rem;
+.commit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.commit-content .company {
+.commit-hash-id {
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+.commit-branch {
+  background-color: rgba(59, 130, 246, 0.15);
+  /* Blueish tint */
+  color: #60a5fa;
+  /* Light blue */
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.commit-company {
   color: var(--text-muted);
-  font-size: 0.9rem;
+}
+
+.commit-body {
+  padding: 1.5rem 1.25rem;
+}
+
+.commit-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
   margin-bottom: 1rem;
 }
 
-.commit-content ul {
-  list-style: none;
+.commit-title span {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.commit-desc {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
   padding-left: 1rem;
 }
 
-.commit-content ul li {
-  position: relative;
+.commit-desc p {
   margin-bottom: 0.5rem;
-  color: var(--text-secondary);
 }
 
-.commit-content ul li::before {
-  content: '-';
-  position: absolute;
-  left: -1rem;
+.commit-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.commit-skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-orange);
+  border: 1px solid rgba(234, 88, 12, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.commit-skill-tag:hover {
+  background-color: rgba(234, 88, 12, 0.1);
+  border-color: var(--accent-orange);
+}
+
+.commit-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.commit-footer span {
+  white-space: nowrap;
+}
+
+.commit-footer span.insertions {
+  color: #10b981;
+  /* Emerald green */
+}
+
+.commit-footer span.deletions {
+  color: #ef4444;
+  /* Red */
+}
+
+/* Date Pill */
+.date-pill-container {
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item.right .date-pill-container {
+  flex-direction: row-reverse;
+}
+
+.date-pill {
+  background-color: #1a1a1a;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Initial Commit Node */
+.initial-commit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.initial-commit-pill {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-orange);
+  border: 1px solid var(--accent-orange);
+  border-radius: 20px;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.initial-commit-pill i {
+  color: var(--accent-orange);
 }
 
 /* Projects Section */
