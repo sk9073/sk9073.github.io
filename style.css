@@ -1391,23 +1391,189 @@ footer {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-  }
 
-  .side-nav {
-    display: none;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .projects-grid,
   .about-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px;
+    /* Space for the sticky bottom nav */
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-left {
+    align-items: center;
+  }
+
+  .glitch {
+    font-size: 3.5rem;
+  }
+
+  .glitch-secondary {
+    font-size: 3.5rem;
+  }
+
+  /* Mobile Bottom Navigation */
+  .side-nav {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: rgba(10, 10, 9, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+  }
+
+  .side-nav ul {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 1rem;
+  }
+
+  .side-nav ul::before {
+    top: 50%;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  .nav-dot {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-color);
+  }
+
+  .nav-dot i {
+    opacity: 1;
+    /* Always show icons on mobile for usability */
+    transform: scale(1);
+    font-size: 1rem;
+  }
+
+  .nav-link.active .nav-dot {
+    transform: translateY(-5px);
+    /* Pop up slightly when active */
+  }
+
+  .container {
+    padding: 0 1rem;
   }
 
   .sys-stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .terminal-window {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  /* Reduce skill icon size on mobile sphere */
+  .skill-item i {
+    font-size: 2rem;
+  }
+
+  /* Git Timeline Mobile Override */
+  .timeline {
+    padding: 1rem 0;
+  }
+
+  .timeline::before {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-item {
+    align-items: flex-start !important;
+    padding-left: 40px;
+    /* Reduced from 50px */
+    margin-bottom: 3rem;
+  }
+
+  /* Force column layout against desktop left/right row directives */
+  .timeline-item.left,
+  .timeline-item.right {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+
+  .commit-node {
+    left: 20px;
+    transform: translateX(-50%);
+    top: 2rem;
+  }
+
+  .timeline-item.right .commit-node {
+    left: 20px;
+  }
+
+  .timeline-content {
+    width: 100% !important;
+    text-align: left !important;
+    order: 2 !important;
+    margin-top: 0.5rem;
+  }
+
+  .timeline-item.left .timeline-content,
+  .timeline-item.right .timeline-content {
+    padding: 0 !important;
+  }
+
+  /* Reposition connector lines */
+  .timeline-item::before {
+    left: 20px !important;
+    width: 25px !important;
+    /* Shorter connector on mobile */
+    top: 2rem !important;
+    /* Align near the top since content is stacked */
+    right: auto !important;
+  }
+
+  /* Move dates above cards */
+  .timeline-date {
+    width: 100% !important;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    position: static !important;
+    order: 1 !important;
+  }
+
+  .date-pill-container {
+    justify-content: flex-start;
+  }
+
+  .timeline-item.left .date-pill-container,
+  .timeline-item.right .date-pill-container {
+    justify-content: flex-start;
+  }
+
+  .date-connector {
+    display: none;
+  }
+
+  .initial-commit-container {
+    justify-content: flex-start;
+    padding-left: 40px;
+    /* Adjust to match timeline-item */
+  }
+
+  .initial-commit-pill {
+    margin-left: -20px;
+    /* Offset to align with line */
   }
 }
