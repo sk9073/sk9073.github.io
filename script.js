@@ -142,3 +142,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+// Contact Form AJAX Submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = '[ Sending... ]';
+    submitBtn.style.color = '#e5c07b'; // Yellow for progress
+
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          // Success
+          submitBtn.innerText = '[ Message Sent! ]';
+          submitBtn.style.color = '#98c379'; // Green for success
+          this.reset();
+        } else {
+          // Error
+          submitBtn.innerText = '[ Error: Try Again ]';
+          submitBtn.style.color = '#e06c75'; // Red for error
+        }
+      })
+      .catch(error => {
+        submitBtn.innerText = '[ Network Error ]';
+        submitBtn.style.color = '#e06c75';
+      })
+      .finally(() => {
+        // Revert back after 3.5 seconds
+        setTimeout(() => {
+          submitBtn.innerText = originalText;
+          submitBtn.style.color = '';
+        }, 3500);
+      });
+  });
+}

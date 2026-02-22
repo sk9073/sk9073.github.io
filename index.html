@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Developer IDE</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="profile.png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -461,18 +463,23 @@
                 </div>
                 <div class="contact-terminal fade-in-up delay-1">
                     <p class="contact-prompt">guest@portfolio:~$ <span class="command">./send-message.sh</span></p>
-                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent simulated!');">
+                    <form id="contactForm" class="contact-form" action="https://formsubmit.co/sivanandi9073@gmail.com" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="New message from your Portfolio!">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="box">
+                        
                         <div class="form-group">
                             <label>&gt; Enter your name:</label>
-                            <input type="text" required placeholder="John Doe" class="cli-input">
+                            <input type="text" name="name" required placeholder="John Doe" class="cli-input">
                         </div>
                         <div class="form-group">
                             <label>&gt; Enter your email:</label>
-                            <input type="email" required placeholder="name@domain.com" class="cli-input">
+                            <input type="email" name="email" required placeholder="name@domain.com" class="cli-input">
                         </div>
                         <div class="form-group">
                             <label>&gt; Enter your message:</label>
-                            <textarea required rows="3" placeholder="..." class="cli-input"></textarea>
+                            <textarea name="message" required rows="3" placeholder="..." class="cli-input"></textarea>
                         </div>
                         <button type="submit" class="cli-btn">[ Execute ]</button>
                     </form>
