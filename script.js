@@ -65,21 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. Skills 3D Sphere (TagCloud)
   const skillContainer = '.skill-sphere';
   const skillTexts = [
+    '<div class="skill-item"><i class="devicon-graphql-plain colored"></i><span>GraphQL</span></div>',
+    '<div class="skill-item"><i class="devicon-ruby-plain colored"></i><span>Ruby</span></div>',
     '<div class="skill-item"><i class="devicon-html5-plain colored"></i><span>HTML</span></div>',
-    '<div class="skill-item"><i class="devicon-css3-plain colored"></i><span>CSS</span></div>',
-    '<div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>',
-    '<div class="skill-item"><i class="devicon-react-original colored"></i><span>React</span></div>',
-    '<div class="skill-item"><i class="devicon-nextjs-plain"></i><span>Next.js</span></div>',
+    '<div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JS</span></div>',
+    '<div class="skill-item"><i class="devicon-typescript-plain colored"></i><span>TS</span></div>',
+    '<div class="skill-item"><i class="devicon-mysql-plain colored"></i><span>SQL</span></div>',
     '<div class="skill-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>',
-    '<div class="skill-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>',
-    '<div class="skill-item"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></div>',
-    '<div class="skill-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>',
-    '<div class="skill-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>',
-    '<div class="skill-item"><i class="devicon-amazonwebservices-plain-wordmark colored"></i><span>AWS</span></div>',
     '<div class="skill-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>',
-    '<div class="skill-item"><i class="devicon-figma-plain colored"></i><span>Figma</span></div>',
-    '<div class="skill-item"><i class="devicon-tailwindcss-plain colored"></i><span>Tailwind</span></div>',
-    '<div class="skill-item"><i class="devicon-bash-plain"></i><span>Bash</span></div>'
+    '<div class="skill-item"><i class="devicon-firebase-plain colored"></i><span>Firebase</span></div>',
+    '<div class="skill-item"><i class="devicon-react-original colored"></i><span>React</span></div>',
+    '<div class="skill-item"><i class="devicon-amazonwebservices-plain-wordmark colored"></i><span>AWS</span></div>'
   ];
 
   const skillOptions = {
@@ -102,10 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.innerHTML = item.innerText;
       });
 
-      // Ensure colors apply properly for non-colored icons
-      document.querySelectorAll('.devicon-nextjs-plain, .devicon-bash-plain').forEach(icon => {
-        icon.style.color = '#fff';
-      });
+
 
       // Force AWS icon to be pure white using a CSS filter
       document.querySelectorAll('.devicon-amazonwebservices-plain-wordmark').forEach(icon => {
